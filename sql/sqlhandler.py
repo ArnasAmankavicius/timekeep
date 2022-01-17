@@ -8,11 +8,6 @@ __sql_create_entry_table = 'CREATE TABLE IF NOT EXISTS entry(so INTEGER NOT NULL
 __sql_insert_order = 'INSERT INTO service_orders VALUES(?, ?, ?, ?, ?, ?, ?)'
 __sql_insert_entry = 'INSERT INTO entry VALUES(?, ?, ?, ?, ?)'
 
-__sql_select_all_entries = 'SELECT * FROM entry'
-__sql_select_all_orders = 'SELECT * FROM service_orders'
-
-__sql_select_by_so = 'SELECT * FROM entry WHERE so=:so'
-
 __sql_con = None
 __sql_cur = None
 
@@ -44,15 +39,6 @@ def insert_entry(data: tuple):
 def commit():
   debug('committing data...')
   __sql_con.commit()
-
-def get_all_entries():
-  return __sql_cur.execute(__sql_select_all_entries)
-
-def get_all_orders():
-  return __sql_cur.execute(__sql_select_all_orders)
-
-def get_all_by_so(so: int):
-  return __sql_cur.execute(__sql_select_by_so, {'so': so})
 
 def close():
   debug('closing database...')
