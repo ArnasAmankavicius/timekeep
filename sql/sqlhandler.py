@@ -30,38 +30,30 @@ def init(path: Path):
   __sql_cur.execute(__sql_create_order_table)
   __sql_cur.execute(__sql_create_entry_table)
   if __sql_con is not None and __sql_cur is not None:
-    return True
-  else:
-    return False
+    return __sql_cur
+  return None
 
 def insert_order(data: tuple):
-  global __sql_cur
   debug(f'executing {__sql_insert_order} : {data}')
   __sql_cur.execute(__sql_insert_order, data)
 
 def insert_entry(data: tuple):
-  global __sql_cur
   debug(f'executing {__sql_insert_entry} : {data}')
   __sql_cur.execute(__sql_insert_entry, data)
 
 def commit():
-  global __sql_con
   debug('committing data...')
   __sql_con.commit()
 
 def get_all_entries():
-  global __sql_cur
   return __sql_cur.execute(__sql_select_all_entries)
 
 def get_all_orders():
-  global __sql_cur
   return __sql_cur.execute(__sql_select_all_orders)
 
 def get_all_by_so(so: int):
-  global __sql_cur
   return __sql_cur.execute(__sql_select_by_so, {'so': so})
 
 def close():
-  global __sql_con
   debug('closing database...')
   __sql_con.close()

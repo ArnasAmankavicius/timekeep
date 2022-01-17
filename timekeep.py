@@ -8,7 +8,8 @@ import sys
 from os import stat
 from pathlib import Path
 
-import sqlhandler as sqlh
+import sql.sqlhandler as sqlh 
+import sql.sqlquery as sqlquery
 
 from config import init
 
@@ -17,9 +18,11 @@ logging.basicConfig(level=logging.DEBUG)
 settings = init()
 datetime = time.time()
 db_path = Path(settings['db_path'])
+cursor = sqlh.init(db_path)
 
 if __name__ == "__main__":
-  if(sqlh.init(db_path)):
+  if(cursor is not None):
+    sqlquery.init(cursor)
     logging.debug('database loaded into memory!')
     # Company One
     sqlh.insert_order((123456, "Company 1", "Example Title", 1, datetime, None, None))
@@ -29,9 +32,9 @@ if __name__ == "__main__":
     sqlh.insert_order((678901, "Company 1", "Example Title", 1, datetime, None, None))
     sqlh.insert_entry((678901, 1, datetime, datetime + 120, "this is an entry 1"))
     sqlh.insert_entry((678901, 2, datetime + 320, datetime + 640, "this is another entry 2"))
-    for row in sqlh.get_all_by_so(123456):
+    for row in sqlquery.get_all_entries_by_so(123456):
       print(row)
-    for row in sqlh.get_all_by_so(678901):
+    for row in sqlquery.get_all_entries_by_so(678901):
       print(row)
     sqlh.close()
   else:
