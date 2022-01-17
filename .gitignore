@@ -1,0 +1,4 @@
+.git
+.nanorc
+*.swp
+__pycache__
