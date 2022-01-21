@@ -34,11 +34,7 @@ if __name__ == "__main__":
   if(cursor is not None):
     sqlquery.init(cursor)
     logging.debug('database loaded into memory!')
-    example()
-    for row in sqlquery.get_all_entries_by_so(123456):
-      print(row)
-    for row in sqlquery.get_all_entries_by_so(678901):
-      print(row)
+    
     sqlh.close()
   else:
     logging.error('failed to load db into memory. exiting...')
