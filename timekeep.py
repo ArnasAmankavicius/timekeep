@@ -1,15 +1,13 @@
 #!/usr/bin/python3
-
 import json
 import time
 import logging
-import sys
 
-from os import stat
 from pathlib import Path
 
 import sql.sqlhandler as sqlh 
 import sql.sqlquery as sqlquery
+import parser
 
 from config import init
 
@@ -34,7 +32,21 @@ if __name__ == "__main__":
   if(cursor is not None):
     sqlquery.init(cursor)
     logging.debug('database loaded into memory!')
-    
+
+    args = parser.parse()
+    if args.action[0].startswith('create'):
+      sqlh.insert_order((args.so[0], args.company[0], args.title[0], 1, datetime, None, None))
+
+    if args.action[0].startswith('get'):
+      print(sqlquery.get_specific_so(args.so[0]))
+      entries = sqlquery.get_all_entries_by_so(args.so[0])
+      for entry in entries:
+        print(entry)
+
+    if args.action[0].startswith('entry'):
+      sqlh.insert_entry((args.so[0], 1, datetime, datetime + 120, args.entry_text[0]))
+
+    sqlh.commit()
     sqlh.close()
   else:
     logging.error('failed to load db into memory. exiting...')

@@ -9,6 +9,7 @@ __sql_select_all_orders = 'SELECT * FROM service_orders'
 
 # Dynamic Queries
 __sql_select_entries_by_so = 'SELECT * FROM entry WHERE so=:so'
+__sql_select_so = 'SELECT * FROM service_orders WHERE so=:so'
 # ---------
 
 __sql_cur = None
@@ -25,3 +26,6 @@ def get_all_orders():
 
 def get_all_entries_by_so(so: int):
     return __sql_cur.execute(__sql_select_entries_by_so, {'so': so})
+
+def get_specific_so(so: int):
+    return __sql_cur.execute(__sql_select_so, {'so': so})
