@@ -34,6 +34,7 @@ if __name__ == "__main__":
     logging.debug('database loaded into memory!')
 
     args = parser.parse()
+    # this needs to be cleaned up. Accessing data as an array is not quite easy to read
     if args.action[0].startswith('create'):
       sqlh.insert_order((args.so[0], args.company[0], args.title[0], 1, datetime, None, None))
 
