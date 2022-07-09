@@ -1,3 +1,8 @@
+---
+# Archived
+Archived due to the application no longer being needed.
+---
+
 # timekeep
 Tool for keeping customer time entries. Uses SQLite3 for tracking entries. DB stored locally in user home directory.
 
